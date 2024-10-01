@@ -150,7 +150,52 @@ public class Main {
 		System.out.println(usersTreeSet);
 
 		// ********************************************************** MAP **********************************************************
-		
+		// Le Map sono strutture dati in cui ogni elemento è caratterizzato da una coppia <CHIAVE, VALORE>, quindi quando ne creiamo una dovremo
+		// specificare di che tipo sarà la chiave e di che tipo sarà il valore. Le chiavi devono essere UNICHE
+		HashMap<Integer, User> usersMap = new HashMap<>(); // Qua ad es. sto dichiarando che questa usersMap avrà come chiavi dei numeri interi
+		// qualsiasi e come valori corrispondenti degli utenti
+		// In questo caso ogni elemento di usersMap sarà un qualcosa del tipo:
+		// 123213 - Aldo Baglio
+		// 213134 - Giovanni Storti
+		// 333333 - Giacomo Poretti
+
+		HashMap<String, String> dizionario = new HashMap<>(); // In questo caso sia chiave che valore sono di tipo String
+		// In questo caso ogni elemento di dizionario sarà un qualcosa del tipo:
+		// "Casa" - "Definizione della parola casa"
+		// "Barbagianni" - "Definizione di barbagianni"
+
+		System.out.println("----------------------------------------- AGGIUNTA ELEMENTI --------------------------------------------------");
+		usersMap.put(123213, aldo); // Quando aggiungo gli elementi devo rispettare i tipi di chiave e valore
+		usersMap.put(213134, giovanni);
+		usersMap.put(333333, giacomo);
+		System.out.println(usersMap);
+
+		dizionario.put("Casa", "Definizione della parola casa");
+		dizionario.put("Barbagianni", "Definizione di barbagianni");
+		dizionario.put("Barbagianni", "Asdasdasdsadas"); // Non ci possono essere due elementi con la stessa chiave, mi sovrascriverà il precedente
+		System.out.println(dizionario);
+
+
+		System.out.println("----------------------------------------- LEGGERE ELEMENTI --------------------------------------------------");
+		System.out.println("La definizione di Barbagianni è: " + dizionario.get("Barbagianni")); // Se la chiave non viene trovata mi restituisce NULL
+
+		System.out.println("----------------------------------------- RIMUOVERE ELEMENTI --------------------------------------------------");
+		dizionario.remove("Casa"); // Anche per rimuovere specifico la chiave
+
+		System.out.println("----------------------------------------- MODIFICARE UN VALORE DI UN ELEMENTO --------------------------------------------------");
+		dizionario.replace("Barbagianni", "Definizione più aggiornata di Barbagianni"); // Anche per cambiare un valore specifico la chiave, ritorna null se non lo trova
+
+		System.out.println("----------------------------------------- OTTENERE ELENCO CHIAVI --------------------------------------------------");
+		Set<String> chiaviDizionario = dizionario.keySet(); // Mi ritorna un Set perché le chiavi sono tutte univoche
+
+		for (String chiave : chiaviDizionario) {
+			System.out.println("Chiave: " + chiave);
+			System.out.println("Valore: " + dizionario.get(chiave));
+		}
+
+		System.out.println("----------------------------------------- OTTENERE ELENCO VALORI --------------------------------------------------");
+		Collection<String> valoriDizionario = dizionario.values();
+		System.out.println(valoriDizionario);
 
 	}
 }
