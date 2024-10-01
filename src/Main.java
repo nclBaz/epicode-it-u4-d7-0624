@@ -1,7 +1,6 @@
 import entities.User;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 	public static void main(String[] args) {
@@ -10,8 +9,12 @@ public class Main {
 		User giovanni = new User("Giovanni", "Storti");
 		User giacomo = new User("Giacomo", "Poretti");
 
-		ArrayList<User> usersList = new ArrayList<>(); // Nelle parentesi angolari vado a specificare il tipo di dato che voglio venga salvato nella lista
-
+		// ArrayList<User> usersList = new ArrayList<>(); // Nelle parentesi angolari vado a specificare il tipo di dato che voglio venga salvato nella lista
+		List<User> usersList = new LinkedList<>(); // <-- UPCASTING. Lo utilizzo se voglio tenermi una porta aperta per il futuro. Nel senso
+		// che potrei voler in futuro sostituire l'ArrayList con un altro tipo di List, ad esempio LinkedList
+		// Se utilizzo metodi specifici che solo le ArrayList possiedono purtroppo però non potrò usare l'upcasting
+		// Le LinkedList sono più performanti in termini di aggiunte/rimozioni rispetto alle ArrayList, di contro però le ArrayList sono ben più compatte
+		// e quindi efficienti
 
 		System.out.println("------------------------------------------ ADD --------------------------------------------");
 		// Permette di aggiungere elementi o in coda, o specificando un indice/posizione che di conseguenza shifta gli altri elementi
@@ -94,5 +97,60 @@ public class Main {
 		ArrayList<Integer> numeriInteri = new ArrayList<>();
 		numeriInteri.add(1);
 		numeriInteri.add(100);
+
+		// ************************************************************** RIMUOVERE ELEMENTI DA LISTE **************************************************
+		ArrayList<String> lettere = new ArrayList<>(Arrays.asList("a", "b", "c", "d", "e", "f", "g")); // Per inizializzare una lista con valori posso usare Arrays.asList()
+
+		/* Non si può rimuovere elementi mentre la si sta ciclando
+		for (String lettera : lettere) {
+				if (lettera.equals("c")) lettere.remove(lettera);
+				else System.out.println(lettera);
+			}*/
+
+		// Per poter rimuovere elementi da una lista mentre la si cicla bisogna usare il cosiddetto Iterator
+		Iterator<String> iterator = lettere.iterator();
+		while (iterator.hasNext()) { // Fino a che ci sono ulteriori elementi, prosegui con il ciclo
+			String lettera = iterator.next(); // iterator.next() mi restituisce sempre l'elemento corrente
+			if (lettera.equals("c")) iterator.remove(); // <-- N.B. non sto facendo lettere.remove() perché avrei lo stesso problema di sopra
+				// devo utilizzare l'iterator, quindi iterator.remove(). Il risultato finale è che l'iterator riuscirà a rimuovere quell'elemento
+				// dalla lista
+			else System.out.println(lettera);
+		}
+
+
+		// ********************************************************** SET **********************************************************
+		// I Set a differenza delle List NON AMMETTONO DUPLICATI, per poterci regalare questa funzionalità però ad ogni inserimento dovrà
+		// ciclare l'intera collezione di dati per cercare se c'è un duplicato di quello che stiamo inserendo, se non c'è lo inserisce
+		// se c'è ritornerà false
+		HashSet<User> usersSet = new HashSet<>();
+		// Set<User> usersSet = new HashSet<>(); <-- anche qua potrei usare l'upcasting
+		// Alternativa a HashSet è il LinkedHashSet che mantiene anche un ordine di inserzione degli elementi
+		usersSet.add(aldo);
+		usersSet.add(giovanni);
+		usersSet.add(giacomo);
+		// usersSet.add(aldo); <-- Aggiungere un duplicato non è vietato nel senso che riceverò un'eccezione, IntelliJ mi segnala semplicemente
+		// come warning la cosa perché comunque fare un .add() nei Set significa che Java dovrà percorrere tutto il Set prima di capire se può aggiungere
+		// l'elemento
+		System.out.println(usersSet);
+
+		TreeSet<String> alfabeto = new TreeSet<>(); // Il TreeSet oltre a non contenere duplicati mi ordina gli elementi (operazione molto costosa quindi
+		// se non necessaria meglio utilizzare un altro tipo di Set )
+		alfabeto.add("g");
+		alfabeto.add("b");
+		alfabeto.add("z");
+		alfabeto.add("a");
+		alfabeto.add("c");
+
+		System.out.println(alfabeto);
+
+		TreeSet<User> usersTreeSet = new TreeSet<>(); // Per rendere gli User compatibili con i TreeSet bisogna che essi possiedano un criterio di
+		// ordinamento. Per fare ciò devono implementare l'interfaccia COMPARABLE
+		usersTreeSet.add(giovanni);
+		usersTreeSet.add(aldo);
+		System.out.println(usersTreeSet);
+
+		// ********************************************************** MAP **********************************************************
+		
+
 	}
 }
